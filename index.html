@@ -6,10 +6,18 @@
     <title>web synth</title>
     <link rel="icon" href="images/sine-white.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.45/Tone.js"></script>
+    <meta name="viewpart" content="width=device-width, initial-scale">
 </head>
 
 <body>
-    <div id="container">
+    <div id="keyboard">
+    </div>
+    <div class="osc">OSC
+        <div class="osctype">
+            <li>sine <button class="oscbuttons"></button></li>
+            <li>saw <button class="oscbuttons"></button></li>
+            <li>triangle <button class="oscbuttons"></button></li>
+        </div>
     </div>
     <script src="synth.js"></script>
 </body>

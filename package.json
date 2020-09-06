@@ -1,0 +1,22 @@
+{
+  "name": "js-websynth",
+  "version": "1.0.0",
+  "description": "small synth in your browser",
+  "main": "synth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinionMax/js-websynth.git"
+  },
+  "author": "MinionMax",
+  "license": "ISC",
+  "dependencies": {
+    "tone": "^14.7.39"
+  },
+  "bugs": {
+    "url": "https://github.com/MinionMax/js-websynth/issues"
+  },
+  "homepage": "https://github.com/MinionMax/js-websynth#readme"
+}

@@ -3,15 +3,17 @@
 body{
     background-color: rgb(229, 229, 229);
     font-family: "Didact Gothic";
-
+    text-decoration: none;
+    margin-right: 15%;
+    margin-left: 15%;
 }
 
-#container{
+#keyboard{
     position: absolute;
     height: 200px;
     border: 3px solid rgb(158, 158, 158);
-    top: calc(50% - 100px);
-    left: calc(50% - 350px)
+    top: 40%;
+    border-radius: 2px;
 }
 
 .whitenote{
@@ -30,4 +32,31 @@ body{
     left: 68%;
     border: 1px solid rgb(158, 158, 158);
     background-color: rgb(158, 158, 158);
+}
+
+.osc{
+    position: absolute;
+    border: 2px solid rgb(158, 158, 158);
+    list-style: none;
+    top: 20%;
+    text-align: center;
+    font-size: 150%;
+    padding: 10px;
+    font-weight: 400;
+}
+
+.osctype{
+    font-size:70%;
+    color: rgb(158, 158, 158);
+}
+
+.osc .osctype .oscbuttons{
+    height: 20px;
+    display: inline-block;
+}
+
+@media screen and (max-width: 900px) {
+    .whitenote{
+        width: 25px
+    }
 }
