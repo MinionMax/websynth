@@ -1,6 +1,6 @@
 //Master Synth Engine
 var notes = ["C", "D", "E", "F", "G", "A", "B"]//available note
-const synth = new Tone.PolySynth().toDestination();//creates new synth instrument
+const synth = new Tone.Synth().toDestination();//creates new synth instrument
 var html = ""
 
 //set max amount of octaves
@@ -37,33 +37,42 @@ function noteDown(elem, isSharp){
     var note = elem.dataset.note;
     console.log("user triggered", note);
     elem.style.background = isSharp ? "rgb(78, 78, 78)" : "#ccc"
-    synth.triggerAttackRelease(note);
+    synth.triggerAttackRelease(note, "4n");
     event.stopPropagation();
 }
 
 function noteUp(elem, isSharp){
     elem.style.background = isSharp ? "rgb(158, 158, 158)" : "none"
-    synth.triggerRelease(note)
 }
 
 
 var OSCbuttons = document.getElementsByClassName("oscbuttons")
 for(let div of OSCbuttons) {
     div.onclick = (activeOSC) => {
-         for(let notactiveOSC of OSCbuttons) {
-          if(notactiveOSC != activeOSC.target) {
-              notactiveOSC.dataset.active = false
-              activeOSC.target.dataset.active =true
-          }
-      }
-  }
+        for(let notactiveOSC of OSCbuttons) {
+            if(notactiveOSC != activeOSC.target) {
+                notactiveOSC.dataset.active = false;
+                activeOSC.target.dataset.active = true;
+                
+                switch(event.target.name){
+                    case "sine":
+                        synth.oscillator.type = "sine";
+                    break;
+                    case "saw":
+                        synth.oscillator.type ="sawtooth"
+                    break;
+                    case "triangle":
+                        synth.oscillator.type ="triangle"
+                    break;
+                    case "square":
+                        synth.oscillator.type ="square"
+                    break;
+                }
+                console.log("OSC has been set to:", event.target.name)
+            }
+        }
+      
+    }
 }
 
-/* //Chain
-const osc = new Tone.Oscillator()
-const env
-const filter
-const distortion
-
-synth.chain(osc, env, filter, distortion, Tone.Destination)
-*/
+synth.toDestination()

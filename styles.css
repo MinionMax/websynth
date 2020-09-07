@@ -24,7 +24,8 @@ body{
     height: 100%;
     width: 50px;
     float: left;
-    border: 1px solid rgb(158, 158, 158)
+    border: 1px solid rgb(158, 158, 158);
+    transition: 150ms;
 }
 
 .blacknote{
