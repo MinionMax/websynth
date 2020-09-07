@@ -4,7 +4,7 @@ const synth = new Tone.PolySynth().toDestination();//creates new synth instrumen
 var html = ""
 
 //set max amount of octaves
-for (var octave = 0; octave < 3 ; octave++)
+for (var octave = 0; octave < 2 ; octave++)
 {
     for (var i = 0; i < notes.length; i++) {
         var note = notes[i];
@@ -46,7 +46,17 @@ function noteUp(elem, isSharp){
     synth.triggerRelease(note)
 }
 
-/* Chain
+function toggleOSC(OSC){
+    var OSCbuttons = document.getElementsByClassName("oscbuttons")
+    for (var i = 0; i < OSCbuttons.length; i++){
+        if(OSC != OSCbuttons[i]){
+            OSCbuttons.dataset.active = false
+        }
+    }
+}
+
+
+/* //Chain
 const osc = new Tone.Oscillator()
 const env
 const filter

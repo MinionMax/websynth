@@ -14,11 +14,12 @@
     </div>
     <div class="osc">OSC
         <div class="osctype">
-            <li>sine <button class="oscbuttons"></button></li>
-            <li>saw <button class="oscbuttons"></button></li>
-            <li>triangle <button class="oscbuttons"></button></li>
+            <li> <button onclick="toggleOSC(this)" class="oscbuttons" id="1" data-active="false">sine</button></li>
+            <li> <button onclick="toggleOSC(this)" class="oscbuttons" id="2" data-active="false">saw</button></li>
+            <li> <button onclick="toggleOSC(this)" class="oscbuttons" id="3" data-active="false">triangle</button></li>
+            <li> <button onclick="toggleOSC(this)" class="oscbuttons" id="4" data-active="false">square</button></li>
         </div>
     </div>
-    <script src="synth.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

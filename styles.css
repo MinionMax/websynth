@@ -6,13 +6,16 @@ body{
     text-decoration: none;
     margin-right: 15%;
     margin-left: 15%;
+    display: flex;
+    justify-content: center;
+    height:100%;
 }
 
 #keyboard{
     position: absolute;
     height: 200px;
     border: 3px solid rgb(158, 158, 158);
-    top: 40%;
+    top: 45%;
     border-radius: 2px;
 }
 
@@ -43,16 +46,30 @@ body{
     font-size: 150%;
     padding: 10px;
     font-weight: 400;
+    width: 200px;
+
 }
 
 .osctype{
-    font-size:70%;
-    color: rgb(158, 158, 158);
+    font-size:90%;
+    background-color: rgb(229, 229, 229);
+    
 }
 
 .osc .osctype .oscbuttons{
     height: 20px;
-    display: inline-block;
+    background-color: rgb(229, 229, 229);
+    border: none;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+    transition: 250ms;
+    font-family: "didact gothic";
+}
+
+.osc .osctype .oscbuttons[data-active = true]{
+    color: #fff;
+    background-color: #18c947;
 }
 
 @media screen and (max-width: 900px) {
