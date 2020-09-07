@@ -46,15 +46,18 @@ function noteUp(elem, isSharp){
     synth.triggerRelease(note)
 }
 
-function toggleOSC(OSC){
-    var OSCbuttons = document.getElementsByClassName("oscbuttons")
-    for (var i = 0; i < OSCbuttons.length; i++){
-        if(OSC != OSCbuttons[i]){
-            OSCbuttons.dataset.active = false
-        }
-    }
-}
 
+var OSCbuttons = document.getElementsByClassName("oscbuttons")
+for(let div of OSCbuttons) {
+    div.onclick = (activeOSC) => {
+         for(let notactiveOSC of OSCbuttons) {
+          if(notactiveOSC != activeOSC.target) {
+              notactiveOSC.dataset.active = false
+              activeOSC.target.dataset.active =true
+          }
+      }
+  }
+}
 
 /* //Chain
 const osc = new Tone.Oscillator()
