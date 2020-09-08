@@ -6,20 +6,47 @@
     <title>web synth</title>
     <link rel="icon" href="images/sine-white.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.45/Tone.js"></script>
-    <meta name="viewpart" content="width=device-width, initial-scale">
+    <meta name="viewport" content="width=device-width, initial-scale">
 </head>
 
 <body>
     <div id="keyboard">
     </div>
-    <div class="osc">OSC
-        <div class="osctype">
+    <div class="osc-container">
+        <h3 class="osc-header">OSC</h3>
+        <div class="osctypes">
             <li> <button class="oscbuttons" id="1" data-active="true" name="sine">sine</button></li>
             <li> <button class="oscbuttons" id="2" data-active="false" name="saw">saw</button></li>
             <li> <button class="oscbuttons" id="3" data-active="false" name="triangle">triangle</button></li>
-            <li> <button class="oscbuttons" id="4" data-active="false"name="square">square</button></li>
+            <li> <button class="oscbuttons" id="4" data-active="false" name="square">square</button></li>
         </div>
     </div>
+    <div class="envelope-container">
+        <h2 class="envelope-header">ENVELOPE</h2>
+        <div class="envelope-controls-container-container">
+            <div class="envelope-controls-container">
+                <li class="envelope-controls">A</li>
+                <input type="range" min="0" max="3" value="1.5" id="envelope-slider" class="envelope" orient="vertical">
+            </div>
+            <div class="envelope-control-container">
+                <li class="envelope-controls">D</li>
+                <input type="range" min="0" max="3" value="1.5" id="envelope-slider" class="envelope" orient="vertical">
+            </div>
+            <div class="envelope-control-container">
+                <li class="envelope-controls">S</li>
+                <input type="range" min="0" max="3" value="1.5" id="envelope-slider" class="envelope" orient="vertical">
+            </div>
+            <div class="envelope-control-container">
+                <li class="envelope-controls">R</li>
+                <input type="range" min="0" max="3" value="1.5" id="envelope-slider" class="envelope" orient="vertical">
+            </div>
+        </div>
+    </div>
+    <div class="volume-container">
+        <h1 class="volume-header">VOLUME</h1>
+        <input type="range" min="-100" max="4" value="" id="volume-slider" class="volume">
+    </div>
+    
     <script src="main.js"></script>
 </body>
 </html>

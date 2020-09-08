@@ -1,21 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
 
-body{
-    background-color: rgb(229, 229, 229);
+*{
     font-family: "Didact Gothic";
     text-decoration: none;
+}
+
+body{
+    position: relative;
+    background-color: rgb(229, 229, 229);
     margin-right: 15%;
     margin-left: 15%;
     display: flex;
     justify-content: center;
     height:100%;
+    flex-direction: row;
 }
 
 #keyboard{
     position: absolute;
     height: 200px;
     border: 3px solid rgb(158, 158, 158);
-    top: 45%;
+    margin-top: 40%;
     border-radius: 2px;
 }
 
@@ -36,28 +41,37 @@ body{
     left: 68%;
     border: 1px solid rgb(158, 158, 158);
     background-color: rgb(158, 158, 158);
+    transition: 150ms;
 }
 
-.osc{
+.osc-container{
     position: absolute;
     border: 2px solid rgb(158, 158, 158);
     list-style: none;
-    top: 20%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20%;
+    margin-right: 53%;
     font-size: 150%;
     padding: 10px;
     font-weight: 400;
-    width: 200px;
-
+    width: 15%;
+    height: 160px;
 }
 
-.osctype{
+.osc-header{
+    font-weight: 400;
+    text-align: center;
+    margin: 0%;
+}
+
+.osctypes{
     font-size:90%;
     background-color: rgb(229, 229, 229);
-    
+    text-align: center; 
 }
 
-.osc .osctype .oscbuttons{
+.osc-container .osctypes .oscbuttons{
     height: 20px;
     background-color: rgb(229, 229, 229);
     border: none;
@@ -66,11 +80,105 @@ body{
     text-align: center;
     transition: 250ms;
     font-family: "didact gothic";
+
 }
 
-.osc .osctype .oscbuttons[data-active = true]{
+.osc-container .osctypes .oscbuttons[data-active = true]{
     color: #fff;
     background-color: #18c947;
+}
+
+.volume-container{
+    display: block;
+    width: 50%;
+    position: absolute;
+}
+
+.volume-header{
+    position: relative;
+    top: 5%;
+    text-align: center;
+    font-size: 110%;
+    font-weight: 500;
+}
+
+.volume{
+    -webkit-appearance: none;
+    width: 100%;
+    background: linear-gradient(-90deg,#18c947 60%, rgb(158, 158, 158) 60%);
+    outline: none;
+    transition: 200ms;
+    height: 4px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.volume:hover{
+    opacity: 1;
+    height: 8px
+}
+
+.volume::-moz-range-thumb{
+    width: 15px;
+    height: 15px;
+    background: rgb(229, 229, 229);
+    border-radius: 50%;
+    cursor: grab
+}
+
+.volume::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: rgb(229, 229, 229);
+    border-radius: 50%;
+    cursor: grab
+}
+
+.envelope-container{
+    position: absolute;
+    border: 2px solid rgb(158, 158, 158);
+    list-style: none;
+    margin-top: 20%;
+    margin-left: 10%;
+    font-size: 150%;
+    padding: 10px;
+    font-weight: 400;
+    width: 30%;
+    height: 160px;
+    overflow: hidden;
+    align-content: center;
+}
+
+.envelope-controls-container-container{
+    display: flex;
+    flex-direction: row;
+    margin-left: 8%;
+}
+
+.envelope-controls-container{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+.envelope-header{
+    font-weight: 400;
+    text-align: center;
+    margin: 0%;
+}
+
+.envelope-controls{
+    margin-left:40%;
+    position:relative;
+}
+
+.envelope{
+    width: 20px;
+    height: 25%;
+    display: inline-block;
+    position: relative;
+    padding: 10px 20px;
 }
 
 @media screen and (max-width: 900px) {
