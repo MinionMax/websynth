@@ -11,9 +11,8 @@ body{
     margin-right: 15%;
     margin-left: 15%;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     height:100%;
-    flex-direction: row;
 }
 
 #keyboard{
@@ -51,18 +50,17 @@ body{
     display: flex;
     flex-direction: column;
     margin-top: 20%;
-    margin-right: 53%;
-    font-size: 150%;
+    margin-right: 70%;
     padding: 10px;
-    font-weight: 400;
     width: 15%;
     height: 160px;
 }
 
 .osc-header{
-    font-weight: 400;
+    font-size: 28.8px;
     text-align: center;
     margin: 0%;
+    font-weight: 400;
 }
 
 .osctypes{
@@ -80,7 +78,7 @@ body{
     text-align: center;
     transition: 250ms;
     font-family: "didact gothic";
-
+    margin-top: 5%;
 }
 
 .osc-container .osctypes .oscbuttons[data-active = true]{
@@ -119,20 +117,18 @@ body{
 }
 
 .volume::-moz-range-thumb{
-    width: 15px;
-    height: 15px;
-    background: rgb(229, 229, 229);
-    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(90deg,#18c947 0%, rgb(158, 158, 158) 90%);
     cursor: grab
 }
 
 .volume::-webkit-slider-thumb{
     -webkit-appearance: none;
     appearance: none;
-    width: 15px;
-    height: 15px;
-    background: rgb(229, 229, 229);
-    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(-90deg,#18c947 60%, rgb(158, 158, 158) 60%);
     cursor: grab
 }
 
@@ -145,7 +141,7 @@ body{
     font-size: 150%;
     padding: 10px;
     font-weight: 400;
-    width: 30%;
+    width: max-content;
     height: 160px;
     overflow: hidden;
     align-content: center;
@@ -154,7 +150,6 @@ body{
 .envelope-controls-container-container{
     display: flex;
     flex-direction: row;
-    margin-left: 8%;
 }
 
 .envelope-controls-container{
@@ -166,10 +161,11 @@ body{
     font-weight: 400;
     text-align: center;
     margin: 0%;
+    font-size: 28.8px;
 }
 
 .envelope-controls{
-    margin-left:40%;
+    text-align: center;
     position:relative;
 }
 
@@ -179,10 +175,34 @@ body{
     display: inline-block;
     position: relative;
     padding: 10px 20px;
+    background: linear-gradient(90deg,#18c947 60%, rgb(158, 158, 158) 60%);
+    transform: rotate(270deg);
+    margin-top: 30%;
 }
 
-@media screen and (max-width: 900px) {
-    .whitenote{
-        width: 25px
+.envelope::-moz-range-thumb{
+    transform: rotate(270deg);
+}
+.envelope:::-webkit-slider-thumb{
+    transform: rotate(270deg);
+}
+
+@media screen and (max-width: 1024px) {
+    body{
+        margin-left: 8%;
+        margin-right: 8%;
+    }
+
+    #keyboard{
+        margin-top: 50%
+    }
+
+    .osc-container{
+        height: 140px
+    }
+
+    .envelope-controls-container-container{
+        margin-left: 0%;
+        height: 140px
     }
 }

@@ -87,6 +87,9 @@ volumeSlider.addEventListener("mousemove", function(){
     var volumeValue = (Number(volumeSlider.value)+100)/104*100;
     volumeSlider.style.background = `linear-gradient(90deg, #18c947 ${volumeValue}%, rgb(158, 158, 158)   ${volumeValue}%)`;
     console.log(volumeValue)
+    if(volumeValue === undefined){
+        volumeSlider.style.background = "rgb(158, 158, 158)"
+    }
 })
 
 
