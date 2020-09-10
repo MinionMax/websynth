@@ -15,6 +15,14 @@ body{
     height:100%;
 }
 
+.controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 60%;
+}
+
 #keyboard{
     position: absolute;
     height: 200px;
@@ -44,15 +52,14 @@ body{
 }
 
 .osc-container{
-    position: absolute;
+    position: static;
     border: 2px solid rgb(158, 158, 158);
     list-style: none;
     display: flex;
     flex-direction: column;
     margin-top: 20%;
-    margin-right: 70%;
     padding: 10px;
-    width: 15%;
+    width: 150px;
     height: 160px;
 }
 
@@ -133,23 +140,23 @@ body{
 }
 
 .envelope-container{
-    position: absolute;
+    position: static;
     border: 2px solid rgb(158, 158, 158);
     list-style: none;
-    margin-top: 20%;
-    margin-left: 10%;
     font-size: 150%;
     padding: 10px;
     font-weight: 400;
-    width: max-content;
+    width: 300px;
     height: 160px;
     overflow: hidden;
     align-content: center;
+    margin-top: 20%;
 }
 
 .envelope-controls-container-container{
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .envelope-controls-container{
@@ -175,16 +182,17 @@ body{
     display: inline-block;
     position: relative;
     padding: 10px 20px;
-    background: linear-gradient(90deg,#18c947 60%, rgb(158, 158, 158) 60%);
-    transform: rotate(270deg);
+    background: black;
     margin-top: 30%;
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
 }
 
 .envelope::-moz-range-thumb{
-    transform: rotate(270deg);
+
 }
-.envelope:::-webkit-slider-thumb{
-    transform: rotate(270deg);
+.envelope::-webkit-slider-thumb{
+
 }
 
 @media screen and (max-width: 1024px) {

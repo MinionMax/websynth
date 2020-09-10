@@ -80,20 +80,18 @@ var volumeSlider = document.getElementById("volume-slider");
 volumeSlider.oninput = function(){
     volumeSlider.innerHTML = this.value;
     synth.volume.value = this.value
-    console.log("volume set to:", String(Math.floor(synth.volume.value)), "db")
 }
 
 volumeSlider.addEventListener("mousemove", function(){
     var volumeValue = (Number(volumeSlider.value)+100)/104*100;
     volumeSlider.style.background = `linear-gradient(90deg, #18c947 ${volumeValue}%, rgb(158, 158, 158)   ${volumeValue}%)`;
-    console.log(volumeValue)
     if(volumeValue === undefined){
         volumeSlider.style.background = "rgb(158, 158, 158)"
     }
 })
 
 
-synth.envelope.attack = 0;
-synth.envolope.decay = 0;
-synth.envolope.sustain = 0;
-synth.envolope.release = -1;
+synth.envelope.attack = 3;
+synth.envelope.decay = 0.1;
+synth.envelope.sustain = 0.1;
+synth.envelope.release = -1;
