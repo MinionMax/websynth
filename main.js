@@ -57,7 +57,7 @@ for(let div of OSCbuttons) {
                 notactiveOSC.dataset.active = false;
                 activeOSC.target.dataset.active = true;
                 
-                switch(event.target.name){
+                switch(activeOSC.target.name){
                     case "sine":
                         synth.oscillator.type = "sine";
                     break;
@@ -71,7 +71,7 @@ for(let div of OSCbuttons) {
                         synth.oscillator.type ="square";
                     break;
                 }
-                console.log("OSC has been set to:", event.target.name);
+                console.log("OSC has been set to:", activeOSC.target.name);
             }
         }
       
@@ -92,8 +92,20 @@ volumeSlider.addEventListener("mousemove", function(){
     }
 })
 
-
-synth.envelope.attack = 3;
-synth.envelope.decay = 0.1;
-synth.envelope.sustain = 0.1;
-synth.envelope.release = -1;
+var envelopeSlider = document.getElementById("envelope-sliders")
+envelopeSlider.oninput = function(event){
+    switch(event.target.id){
+        case "attack-slider":
+            synth.envelope.attack = event.target.value; 
+        break;
+        case "decay-slider":
+            synth.envelope.decay = event.target.value; 
+        break;
+        case "sustain-slider":
+            synth.envelope.sustain = Number(event.target.value)/100; 
+        break;
+        case "release-slider":
+            synth.envelope.release = event.target.value; 
+        break;
+    }
+}
