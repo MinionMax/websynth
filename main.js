@@ -18,6 +18,8 @@ for (var octave = 0; octave < 2 ; octave++)
         html += `<div class="whitenote"
             onmousedown = "noteDown(this, false)"
             onmouseleave = "noteUp(this, false)"
+            ontouchstart = "noteDown(this, false)"
+            ontouchend = "noteUp(this, false)"
             data-note="${note + (octave + 3)}">`;
         //create black key class within keyboard container
         if (hasSharp){

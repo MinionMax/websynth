@@ -10,7 +10,9 @@
 </head>
 
 <body>
-    <div id="keyboard">
+    <div class="volume-container">
+        <h1 class="volume-header">VOLUME</h1>
+        <input type="range" min="-100" max="4" value="" id="volume-slider" class="volume">
     </div>
     <div class="controls">
         <div class="osc-container">
@@ -45,9 +47,8 @@
         </div>
     </div>
     
-    <div class="volume-container">
-        <h1 class="volume-header">VOLUME</h1>
-        <input type="range" min="-100" max="4" value="" id="volume-slider" class="volume">
+
+    <div id="keyboard">
     </div>
     
     <script src="main.js"></script>
