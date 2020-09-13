@@ -6,6 +6,7 @@
     <title>web synth</title>
     <link rel="icon" href="images/sine-white.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.45/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nexusui@latest/dist/NexusUI.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale">
 </head>
 
@@ -14,8 +15,7 @@
         <h1 class="volume-header">VOLUME</h1>
         <input type="range" min="-100" max="4" value="" id="volume-slider" class="volume">
     </div>
-    <div>
-        <canvas class="oscilloscope"></canvas>
+    <div class="oscilloscope-container">
     </div>
     <div class="controls">
         <div class="osc-container">

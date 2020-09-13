@@ -13,6 +13,7 @@
   "author": "MinionMax",
   "license": "ISC",
   "dependencies": {
+    "nexusui": "^2.1.6",
     "tone": "^14.7.39"
   },
   "bugs": {
