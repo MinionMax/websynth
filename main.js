@@ -2,9 +2,30 @@
 var notes = ["C", "D", "E", "F", "G", "A", "B"]//available note
 const synth = new Tone.Synth().toDestination();//creates new synth instrument
 var html = ""
+var OCTset = 2
+
+var octaveButtons = new Nexus.RadioButton(
+    document.querySelector(".octave-controls"),{
+    'size': [120,25],
+    'numberOfButtons': 5,
+    'active': 2
+})
+
+octaveButtons.on('change',function(n) {
+    OCTset = n
+    console.log(n)
+    if(n === -1){
+        n = 2
+        octaveButtons.select(2)
+        console.log("octave can't be undefined")
+    }
+})
+
+octaveButtons.colorize("accent", "#18c947" )
+octaveButtons.colorize("fill", "rgb(229, 229, 229)" )
 
 //set max amount of octaves
-for (var octave = 0; octave < 2 ; octave++)
+for (var octave = 0; octave < 2; octave++)
 {
     for (var i = 0; i < notes.length; i++) {
         var note = notes[i];
@@ -20,7 +41,7 @@ for (var octave = 0; octave < 2 ; octave++)
             onmouseleave = "noteUp(this, false)"
             ontouchstart = "noteDown(this, false)"
             ontouchend = "noteUp(this, false)"
-            data-note="${note + (octave + 3)}">`;
+            data-note="${note + (octave + Number(OCTset))}">`;
         //create black key class within keyboard container
         if (hasSharp){
             html += `<div class="blacknote"
@@ -28,7 +49,7 @@ for (var octave = 0; octave < 2 ; octave++)
             onmouseleave = "noteUp(this, true)"
             ontouchstart = "noteDown(this, false)"
             ontouchend = "noteUp(this, false)"
-            data-note="${note + "#" + (octave + 3)}"></div>`;
+            data-note="${note + "#" + (octave + OCTset)}"></div>`;
         }
         
         html += `</div>`
@@ -48,7 +69,6 @@ function noteUp(elem, isSharp){
     elem.style.background = isSharp ? "rgb(158, 158, 158)" : "none"
     synth.triggerRelease();
 }
-
 
 var OSCbuttons = document.getElementsByClassName("oscbuttons")
 for(let div of OSCbuttons) {
@@ -79,19 +99,6 @@ for(let div of OSCbuttons) {
     }
 }
 
-var volumeSlider = document.getElementById("volume-slider");
-volumeSlider.oninput = function(){
-    volumeSlider.innerHTML = this.value;
-    synth.volume.value = this.value
-}
-
-volumeSlider.addEventListener("mousemove", function(){
-    var volumeValue = (Number(volumeSlider.value)+100)/104*100;
-    volumeSlider.style.background = `linear-gradient(90deg, #18c947 ${volumeValue}%, rgb(158, 158, 158)   ${volumeValue}%)`;
-    if(volumeValue === undefined){
-        volumeSlider.style.background = "rgb(158, 158, 158)"
-    }
-})
 
 var envelopeSlider = document.getElementById("envelope-sliders")        
 envelopeSlider.oninput = function(event){
@@ -114,8 +121,54 @@ envelopeSlider.oninput = function(event){
 Nexus.context = Tone.getContext().rawContext._nativeAudioContext
 var oscilloscope = new Nexus.Oscilloscope(
     document.querySelector('.oscilloscope'),
-    { 'size': [300,150] 
+    { 'size': [150,75] 
 }) 
 oscilloscope.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
 oscilloscope.colorize("accent", "#18c947" )
 oscilloscope.colorize("fill", "rgb(229, 229, 229)" )
+
+
+
+var filterDial = new Nexus.Dial(
+    document.querySelector(".filter"),{
+    'size': [75,75],
+    'interaction': 'radial', // "radial", "vertical", or "horizontal"
+    'mode': 'relative', // "absolute" or "relative"
+    'min': 0,
+    'max': 20000,
+    'step': 0,
+    'value': 0
+})
+
+var filterValue = new Nexus.Number(
+    document.querySelector(".filter-value")
+)
+filterValue.link(filterDial)
+filterDial.colorize("accent", "#18c947")
+const filter = new Tone.Filter(filterDial.value, "lowpass").toDestination();
+synth.connect(filter)
+
+var meter = new Nexus.Meter(
+    document.querySelector(".meter"),{
+    size: [25,70]
+})
+meter.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
+meter.colorize("accent", "#18c947" )
+meter.colorize("fill", "rgb(229, 229, 229)" )
+
+var volumeSlider = new Nexus.Slider(
+    document.querySelector(".vol2"),{
+    'size': [10, 70],
+    'mode': 'relative',  // 'relative' or 'absolute'
+    'min': -50,
+    'max': 4,
+    'step': 0,
+    'value': 0,
+})
+
+volumeSlider.on('change',function(value) {
+    synth.volume.value = value
+})
+
+volumeSlider.colorize("accent", "#18c947" )
+volumeSlider.colorize("fill", "rgb(158, 158, 158)")

@@ -16,20 +16,26 @@ body{
 .controls{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 100%;
     height: 60%;
     margin: auto;
     flex-wrap: wrap;
+    margin-top: 60px;
 }
 
+.keyboard-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 #keyboard{
     position: static;
     height: 200px;
     border: 3px solid rgb(158, 158, 158);
     border-radius: 2px;
     max-width: max-content;
-    margin: auto;
+    margin-left: auto;
     margin-top: 5%;
     display: flex;
 }
@@ -53,14 +59,44 @@ body{
     background-color: rgb(158, 158, 158);
     transition: 150ms;
 }
-.oscilloscope-container{
+
+.octave-controls-container{
+    text-align: center;
+    margin-top: 5%;
+    font-size: 21px;
+    border: 2px solid rgb(158, 158, 158);
     display: flex;
     justify-content: center;
-    height: 100px;
-    width:100%;
-    margin-bottom: 100px ;
+    flex-direction: column;
+    max-width: max-content;
 }
 
+.octave-controls{
+    padding: 5px;
+}
+.output-container{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: max-content;
+    border: 2px solid rgb(158, 158, 158);
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+}
+
+.visz{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.oscilloscope{
+    margin-right: 5px;
+}
+.meter{
+    border: 1px solid rgb(158, 158, 158)
+}
 .osc-container{
     position: static;
     border: 2px solid rgb(158, 158, 158);
@@ -69,13 +105,6 @@ body{
     flex-direction: column;
     padding: 10px;
     width: 150px;
-}
-
-.osc-header{
-    font-size: 28.8px;
-    text-align: center;
-    margin: 0%;
-    font-weight: 400;
 }
 
 .osctypes{
@@ -102,52 +131,6 @@ body{
     background-color: #18c947;
 }
 
-.volume-container{
-    display: block;
-    width: 50%;
-    margin: auto;
-}
-
-.volume-header{
-    position: relative;
-    top: 5%;
-    text-align: center;
-    font-size: 110%;
-    font-weight: 500;
-}
-
-.volume{
-    -webkit-appearance: none;
-    width: 100%;
-    background: linear-gradient(-90deg,#18c947 60%, rgb(158, 158, 158) 60%);
-    outline: none;
-    transition: 200ms;
-    height: 4px;
-    opacity: 0.7;
-    cursor: pointer;
-}
-
-.volume:hover{
-    opacity: 1;
-    height: 8px
-}
-
-.volume::-moz-range-thumb{
-    width: 10px;
-    height: 10px;
-    background: linear-gradient(90deg,#18c947 0%, rgb(158, 158, 158) 90%);
-    cursor: grab
-}
-
-.volume::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    appearance: none;
-    width: 10px;
-    height: 10px;
-    background: linear-gradient(-90deg,#18c947 60%, rgb(158, 158, 158) 60%);
-    cursor: grab
-}
-
 .envelope-container{
     position: static;
     border: 2px solid rgb(158, 158, 158);
@@ -172,7 +155,7 @@ body{
     flex-direction: column;
     align-content: center;
 }
-.envelope-header{
+.patch-header{
     font-weight: 400;
     text-align: center;
     margin: 0%;
@@ -196,16 +179,16 @@ body{
     -webkit-appearance: slider-vertical;
 }
 
-.envelope::-moz-range-track{
-    color: blue;
-}
-.envelope::-moz-range-thumb{
-
-}
-.envelope::-webkit-slider-thumb{
-
+.filter-container-container{
+    border: 2px solid rgb(158, 158, 158);
+    padding: 10px;
 }
 
+.filter-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 @media screen and (max-width: 1024px) {
     body{
         margin-left: 8%;

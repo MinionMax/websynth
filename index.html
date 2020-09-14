@@ -11,25 +11,18 @@
 </head>
 
 <body>
-    <div class="volume-container">
-        <h1 class="volume-header">VOLUME</h1>
-        <input type="range" min="-100" max="4" value="" id="volume-slider" class="volume">
-    </div>
-    <div class="oscilloscope-container">
-        <div class="oscilloscope"></div>
-    </div>
     <div class="controls">
         <div class="osc-container">
-            <h3 class="osc-header">OSC</h3>
+            <h3 class="patch-header">OSC</h3>
             <div class="osctypes">
-                <li> <button class="oscbuttons" id="1" data-active="true" name="sine">sine</button></li>
+                <li> <button class="oscbuttons" id="1" data-active="false" name="sine">sine</button></li>
                 <li> <button class="oscbuttons" id="2" data-active="false" name="saw">saw</button></li>
-                <li> <button class="oscbuttons" id="3" data-active="false" name="triangle">triangle</button></li>
+                <li> <button class="oscbuttons" id="3" data-active="true" name="triangle">triangle</button></li>
                 <li> <button class="oscbuttons" id="4" data-active="false" name="square">square</button></li>
             </div>
         </div>
         <div class="envelope-container">
-            <h2 class="envelope-header">ENVELOPE</h2>
+            <h2 class="patch-header">ENVELOPE</h2>
             <div class="envelope-controls-container-container" id="envelope-sliders">
                 <div class="envelope-controls-container">
                     <li class="envelope-controls">A</li>
@@ -49,12 +42,36 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+        <div class="filter-container-container">
+            <h6 class="patch-header">FILTER</h6>
+            <div class="filter-container">
+                <div class="filter"></div>
+                <div class="filter-value"></div>
+            </div>
+        </div>
 
-    <div id="keyboard">
+        <div class="output-container">
+            <h5 class="patch-header">OUTPUT</h5>
+            <div class="visz">
+                <div class="oscilloscope"></div>
+                <div class="meter"></div>
+                <div class="vol2"></div>
+            </div>
+
+        </div>
     </div>
     
+    <div class="keyboard-controls">
+        <div class="octave-controls-container">
+            <h4 class="patch-header">OCTAVE</h4>
+            <div class="octave-controls">
+            </div>
+        </div>
+        <div id="keyboard">
+        </div>    
+    </div>
+
+
     <script src="main.js"></script>
 </body>
 </html>
