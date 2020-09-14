@@ -111,8 +111,11 @@ envelopeSlider.oninput = function(event){
     }
 }
 
-var oscilloscope = new Nexus.Oscilloscope('.oscilloscope-container',{
-    'size': [300,150]
-})
-oscilloscope.connect(Tone.Destination);
-
+Nexus.context = Tone.getContext().rawContext._nativeAudioContext
+var oscilloscope = new Nexus.Oscilloscope(
+    document.querySelector('.oscilloscope'),
+    { 'size': [300,150] 
+}) 
+oscilloscope.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
+oscilloscope.colorize("accent", "#18c947" )
+oscilloscope.colorize("fill", "rgb(229, 229, 229)" )
