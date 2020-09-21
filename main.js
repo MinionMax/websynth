@@ -1,6 +1,6 @@
 //Master Synth Engine
 var notes = ["C", "D", "E", "F", "G", "A", "B"]//available note
-const synth = new Tone.Synth().toDestination();//creates new synth instrument
+const synth = new Tone.Synth();//creates new synth instrument
 var html = ""
 var OCTset = 2
 
@@ -30,7 +30,7 @@ for (var octave = 0; octave < 2; octave++)
     for (var i = 0; i < notes.length; i++) {
         var note = notes[i];
         var hasSharp = true;
-        
+
         //eliminate E# and B# keys
         if (note === "E" || note === "B"){
             hasSharp = false;
@@ -41,7 +41,7 @@ for (var octave = 0; octave < 2; octave++)
             onmouseleave = "noteUp(this, false)"
             ontouchstart = "noteDown(this, false)"
             ontouchend = "noteUp(this, false)"
-            data-note="${note + (octave + Number(OCTset))}">`;
+            data-note="${note + (octave + OCTset + 1)}">`;
         //create black key class within keyboard container
         if (hasSharp){
             html += `<div class="blacknote"
@@ -49,7 +49,7 @@ for (var octave = 0; octave < 2; octave++)
             onmouseleave = "noteUp(this, true)"
             ontouchstart = "noteDown(this, false)"
             ontouchend = "noteUp(this, false)"
-            data-note="${note + "#" + (octave + OCTset)}"></div>`;
+            data-note="${note + "#" + (octave + OCTset + 1)}"></div>`;
         }
         
         html += `</div>`
@@ -128,6 +128,7 @@ oscilloscope.colorize("accent", "#18c947" )
 oscilloscope.colorize("fill", "rgb(229, 229, 229)" )
 
 
+const filter = new Tone.Filter({frequency: 10000, type: "lowpass"}).toDestination();
 
 var filterDial = new Nexus.Dial(
     document.querySelector(".filter"),{
@@ -135,18 +136,22 @@ var filterDial = new Nexus.Dial(
     'interaction': 'radial', // "radial", "vertical", or "horizontal"
     'mode': 'relative', // "absolute" or "relative"
     'min': 0,
-    'max': 20000,
+    'max': 10000,
     'step': 0,
-    'value': 0
+    'value': 10000
 })
-
-var filterValue = new Nexus.Number(
-    document.querySelector(".filter-value")
-)
-filterValue.link(filterDial)
 filterDial.colorize("accent", "#18c947")
-const filter = new Tone.Filter(filterDial.value, "lowpass").toDestination();
+
+
+filterDial.on("change", function(){
+    filter.frequency.value = filterDial.value
+})
 synth.connect(filter)
+
+var filterValue = new Nexus.Number(document.querySelector(".filter-value"))
+filterValue.colorize("accent", "#18c947")
+filterValue.link(filterDial)
+
 
 var meter = new Nexus.Meter(
     document.querySelector(".meter"),{
@@ -159,7 +164,7 @@ meter.colorize("fill", "rgb(229, 229, 229)" )
 var volumeSlider = new Nexus.Slider(
     document.querySelector(".vol2"),{
     'size': [10, 70],
-    'mode': 'relative',  // 'relative' or 'absolute'
+    'mode': 'relative',
     'min': -50,
     'max': 4,
     'step': 0,

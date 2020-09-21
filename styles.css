@@ -29,6 +29,7 @@ body{
     flex-direction: row;
     justify-content: space-between;
 }
+
 #keyboard{
     position: static;
     height: 200px;
@@ -189,6 +190,7 @@ body{
     justify-content: center;
     flex-direction: column;
 }
+
 @media screen and (max-width: 1024px) {
     body{
         margin-left: 8%;
