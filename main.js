@@ -2,7 +2,7 @@
 var notes = ["C", "D", "E", "F", "G", "A", "B"]//available note
 const synth = new Tone.Synth();//creates new synth instrument
 var html = ""
-var OCTset = 2
+var OCTset = 4
 
 var octaveButtons = new Nexus.RadioButton(
     document.querySelector(".octave-controls"),{
@@ -12,8 +12,7 @@ var octaveButtons = new Nexus.RadioButton(
 })
 
 octaveButtons.on('change',function(n) {
-    OCTset = n
-    console.log(n)
+    OCTset = n + 2
     if(n === -1){
         n = 2
         octaveButtons.select(2)
@@ -41,7 +40,8 @@ for (var octave = 0; octave < 2; octave++)
             onmouseleave = "noteUp(this, false)"
             ontouchstart = "noteDown(this, false)"
             ontouchend = "noteUp(this, false)"
-            data-note="${note + (octave + OCTset + 1)}">`;
+            data-note="${note}"
+            data-octave="${octave}">`;
         //create black key class within keyboard container
         if (hasSharp){
             html += `<div class="blacknote"
@@ -49,7 +49,8 @@ for (var octave = 0; octave < 2; octave++)
             onmouseleave = "noteUp(this, true)"
             ontouchstart = "noteDown(this, false)"
             ontouchend = "noteUp(this, false)"
-            data-note="${note + "#" + (octave + OCTset + 1)}"></div>`;
+            data-note="${note + "#"}"
+            data-octave="${octave}"></div>`;
         }
         
         html += `</div>`
@@ -59,7 +60,7 @@ for (var octave = 0; octave < 2; octave++)
 document.getElementById("keyboard").innerHTML = html;
 
 function noteDown(elem, isSharp){
-    var note = elem.dataset.note;
+    var note = elem.dataset.note + ((Number(elem.dataset.octave) + OCTset));
     elem.style.background = isSharp ? "rgb(78, 78, 78)" : "#ccc";
     synth.triggerAttackRelease(note);
     event.stopPropagation();
@@ -100,7 +101,7 @@ for(let div of OSCbuttons) {
 }
 
 
-var envelopeSlider = document.getElementById("envelope-sliders")        
+var envelopeSlider = document.getElementById("envelope-sliders")       
 envelopeSlider.oninput = function(event){
     switch(event.target.id){
         case "attack-slider":
