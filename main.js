@@ -18,10 +18,20 @@ octaveButtons.on('change',function(n) {
         octaveButtons.select(2)
         console.log("octave can't be undefined")
     }
+    if (n < 2){
+        octaveButtons.colorize("accent", "#ff0000" )
+    }
+    if (n === 2 || n === undefined){
+        octaveButtons.colorize("accent", "#18c947" )
+    }
+    if (n > 2){
+        octaveButtons.colorize("accent", "#f6ff00" )
+    }
 })
-
 octaveButtons.colorize("accent", "#18c947" )
 octaveButtons.colorize("fill", "rgb(229, 229, 229)" )
+
+
 
 //set max amount of octaves
 for (var octave = 0; octave < 2; octave++)

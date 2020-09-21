@@ -74,7 +74,8 @@ body{
 }
 
 .octave-controls{
-    padding: 5px;
+    padding: 10px;
+    animation: 250ms;
 }
 .output-container{
     display: flex;
