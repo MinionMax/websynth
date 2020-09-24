@@ -71,7 +71,7 @@ document.getElementById("keyboard").innerHTML = html;
 
 function noteDown(elem, isSharp){
     var note = elem.dataset.note + ((Number(elem.dataset.octave) + OCTset));
-    elem.style.background = isSharp ? "rgb(78, 78, 78)" : "#ccc";
+    elem.style.background = isSharp ? "rgb(78, 78, 78)" : "rgb(158, 158, 158";
     synth.triggerAttackRelease(note);
     event.stopPropagation();
 }
@@ -135,9 +135,6 @@ var oscilloscope = new Nexus.Oscilloscope(
     { 'size': [150,75] 
 }) 
 oscilloscope.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
-oscilloscope.colorize("accent", "#18c947" )
-oscilloscope.colorize("fill", "rgb(229, 229, 229)" )
-
 
 const filter = new Tone.Filter({frequency: 10000, type: "lowpass"}).toDestination();
 
@@ -151,8 +148,6 @@ var filterDial = new Nexus.Dial(
     'step': 0,
     'value': 10000
 })
-filterDial.colorize("accent", "#18c947")
-
 
 filterDial.on("change", function(){
     filter.frequency.value = filterDial.value
@@ -160,17 +155,14 @@ filterDial.on("change", function(){
 synth.connect(filter)
 
 var filterValue = new Nexus.Number(document.querySelector(".filter-value"))
-filterValue.colorize("accent", "#18c947")
 filterValue.link(filterDial)
-
 
 var meter = new Nexus.Meter(
     document.querySelector(".meter"),{
     size: [25,70]
 })
 meter.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
-meter.colorize("accent", "#18c947" )
-meter.colorize("fill", "rgb(229, 229, 229)" )
+
 
 var volumeSlider = new Nexus.Slider(
     document.querySelector(".vol2"),{
@@ -184,7 +176,63 @@ var volumeSlider = new Nexus.Slider(
 
 volumeSlider.on('change',function(value) {
     synth.volume.value = value
+}) 
+
+//dark mode/nexus styles function
+var dmButton = document.querySelector('input[name=theme]');
+dmButton.addEventListener("change", function(){
+
+    var transit = () => {
+        document.documentElement.classList.add("transition");
+        window.setTimeout(() => {
+            document.documentElement.classList.remove("transition");
+        }, 1000)
+    }
+
+    var styleDark = () => {
+        var darkBg = "#121212"
+        var darkAc = "#03DAC5"
+        oscilloscope.colorize("fill", darkBg)
+        oscilloscope.colorize("accent", darkAc)
+        filterDial.colorize("fill", darkBg)
+        filterDial.colorize("accent", darkAc)
+        filterValue.colorize("fill", darkBg)
+        filterValue.colorize("accent", darkAc)
+        meter.colorize("fill", darkBg)
+        meter.colorize("accent", darkAc)
+        volumeSlider.colorize("fill", darkBg)
+        volumeSlider.colorize("accent", darkAc)
+        octaveButtons.colorize("fill", darkBg)
+        octaveButtons.colorize("accent", darkAc) 
+    };
+    
+
+
+    if (this.checked){
+        transit();
+        document.documentElement.setAttribute("data-theme", "dark");
+        styleDark();
+    } else{
+        transit();
+        document.documentElement.setAttribute("data-theme", "light");
+        nexusStyle();
+    }
 })
 
-volumeSlider.colorize("accent", "#18c947" )
-volumeSlider.colorize("fill", "rgb(158, 158, 158)")
+window.onload = nexusStyle();
+function nexusStyle(){
+    var lightBg = "rgb(229, 229, 229)"
+    var lightAc = "#18c947"
+    oscilloscope.colorize("fill", lightBg)
+    oscilloscope.colorize("accent", lightAc)
+    filterDial.colorize("fill", lightBg)
+    filterDial.colorize("accent", lightAc)
+    filterValue.colorize("fill", lightBg)
+    filterValue.colorize("accent", lightAc)
+    meter.colorize("fill", lightBg)
+    meter.colorize("accent", lightAc)
+    volumeSlider.colorize("fill", lightBg)
+    volumeSlider.colorize("accent", lightAc)
+    octaveButtons.colorize("fill", lightBg)
+    octaveButtons.colorize("accent", lightAc)
+};

@@ -5,12 +5,78 @@
     text-decoration: none;
 }
 
+html{
+    --bg: rgb(229, 229, 229);
+    --accent: #18c947;
+    --pannel: rgb(158, 158, 158);
+    --text: black;
+    --altText: white;
+}
+
+html[data-theme="dark"]{
+    --bg: #121212;
+    --accent: #03DAC5;
+    --pannel: #333333;
+    --text: #FFFFFF;
+    --altText: #121212;
+}
+
+html.transition,
+html.transition *,
+html.transition *:before,
+html.transition *:after {
+  transition: all 750ms !important;
+  transition-delay: 0 !important;
+}
+
 body{
     position: relative;
-    background-color: rgb(229, 229, 229);
+    background-color: var(--bg);
     margin-right: 15%;
     margin-left: 15%;
     height:100%;
+}
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 52px;
+	height: 27px;
+	background: grey;
+	float: right;
+	border-radius: 100px;
+	position: relative;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+input:checked + label {
+	background: var(--accent);
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 45px;
 }
 
 .controls{
@@ -34,7 +100,7 @@ body{
 #keyboard{
     position: static;
     height: 200px;
-    border: 3px solid rgb(158, 158, 158);
+    border: 3px solid var(--pannel);
     border-radius: 2px;
     max-width: max-content;
     margin-left: auto;
@@ -47,7 +113,7 @@ body{
     height: 100%;
     width: 50px;
     float: left;
-    border: 1px solid rgb(158, 158, 158);
+    border: 1px solid var(--pannel);
     transition: 150ms;
 }
 
@@ -57,8 +123,8 @@ body{
     width: 55%;
     z-index: 1;
     left: 68%;
-    border: 1px solid rgb(158, 158, 158);
-    background-color: rgb(158, 158, 158);
+    border: 1px solid var(--pannel);
+    background-color: var(--pannel);
     transition: 150ms;
 }
 
@@ -66,7 +132,7 @@ body{
     text-align: center;
     margin-top: 5%;
     font-size: 21px;
-    border: 2px solid rgb(158, 158, 158);
+    border: 2px solid var(--pannel);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -82,7 +148,7 @@ body{
     justify-content: center;
     height: 100%;
     width: max-content;
-    border: 2px solid rgb(158, 158, 158);
+    border: 2px solid var(--pannel);
     flex-direction: column;
     text-align: center;
     padding: 10px;
@@ -97,12 +163,13 @@ body{
 .oscilloscope{
     margin-right: 5px;
 }
+
 .meter{
-    border: 1px solid rgb(158, 158, 158)
+    border: 1px solid var(--pannel)
 }
 .osc-container{
     position: static;
-    border: 2px solid rgb(158, 158, 158);
+    border: 2px solid var(--pannel);
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -112,14 +179,14 @@ body{
 
 .osctypes{
     font-size:90%;
-    background-color: rgb(229, 229, 229);
+    background-color: var(--bg);
     text-align: center;
     margin-bottom: 10px;
 }
 
 .osc-container .osctypes .oscbuttons{
     height: 20px;
-    background-color: rgb(229, 229, 229);
+    background-color: var(--bg);
     border: none;
     width: 50%;
     border-radius: 10px;
@@ -127,16 +194,17 @@ body{
     transition: 250ms;
     font-family: "didact gothic";
     margin-top: 5%;
+    color: var(--text)
 }
 
 .osc-container .osctypes .oscbuttons[data-active = true]{
-    color: #fff;
-    background-color: #18c947;
+    color: var(--altText);
+    background-color: var(--accent);
 }
 
 .envelope-container{
     position: static;
-    border: 2px solid rgb(158, 158, 158);
+    border: 2px solid var(--pannel);
     list-style: none;
     font-size: 150%;
     padding: 10px;
@@ -163,11 +231,13 @@ body{
     text-align: center;
     margin: 0%;
     font-size: 28.8px;
+    color: var(--text)
 }
 
 .envelope-controls{
     text-align: center;
     position:relative;
+    color: var(--text)
 }
 
 .envelope{
@@ -183,7 +253,7 @@ body{
 }
 
 .filter-container-container{
-    border: 2px solid rgb(158, 158, 158);
+    border: 2px solid var(--pannel);
     padding: 10px;
 }
 
