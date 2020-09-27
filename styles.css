@@ -240,18 +240,6 @@ label:active:after {
     color: var(--text)
 }
 
-.envelope{
-    width: 20px;
-    height: 25%;
-    display: inline-block;
-    position: relative;
-    padding: 10px 20px;
-    background-color: black;
-    margin-top: 30%;
-    writing-mode: bt-lr;
-    -webkit-appearance: slider-vertical;
-}
-
 .filter-container-container{
     border: 2px solid var(--pannel);
     padding: 10px;

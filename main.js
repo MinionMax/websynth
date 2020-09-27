@@ -68,7 +68,7 @@ for (var octave = 0; octave < 2; octave++)
 }
 
 document.getElementById("keyboard").innerHTML = html;
-
+var pannel = "rgb(158, 158, 158)"
 function noteDown(elem, isSharp){
     var note = elem.dataset.note + ((Number(elem.dataset.octave) + OCTset));
     elem.style.background = isSharp ? "rgb(78, 78, 78)" : "rgb(158, 158, 158";
@@ -77,7 +77,7 @@ function noteDown(elem, isSharp){
 }
 
 function noteUp(elem, isSharp){
-    elem.style.background = isSharp ? "rgb(158, 158, 158)" : "none"
+    elem.style.background = isSharp ? pannel : "none"
     synth.triggerRelease();
 }
 
@@ -110,24 +110,61 @@ for(let div of OSCbuttons) {
     }
 }
 
-
-var envelopeSlider = document.getElementById("envelope-sliders")       
-envelopeSlider.oninput = function(event){
-    switch(event.target.id){
-        case "attack-slider":
-            synth.envelope.attack = event.target.value; 
-        break;
-        case "decay-slider":
-            synth.envelope.decay = event.target.value; 
-        break;
-        case "sustain-slider":
-            synth.envelope.sustain = Number(event.target.value)/100; 
-        break;
-        case "release-slider":
-            synth.envelope.release = event.target.value; 
-        break;
+var attackSlider = new Nexus.Slider(
+    document.querySelector(".a"),{
+    'size': [10, 70],
+    'mode': 'relative',
+    'min': 0,
+    'max': 100,
+    'step': 0,
+    'value': 0,
     }
-}
+)
+attackSlider.on("change", function(val){
+    synth.envelope.attack = val
+})
+
+var decaySlider = new Nexus.Slider(
+    document.querySelector(".d"),{
+    'size': [10, 70],
+    'mode': 'relative',
+    'min': 0,
+    'max': 100,
+    'step': 0,
+    'value': 0,
+    }
+)
+decaySlider.on("change", function(val){
+    synth.envelope.decay = val
+})
+
+var sustainSlider = new Nexus.Slider(
+    document.querySelector(".s"),{
+    'size': [10, 70],
+    'mode': 'relative',
+    'min': 0,
+    'max': 100,
+    'step': 0,
+    'value': 0,
+    }
+)
+sustainSlider.on("change", function(val){
+    synth.envelope.sustain = Number(val)/100
+})
+
+var releaseSlider = new Nexus.Slider(
+    document.querySelector(".r"),{
+    'size': [10, 70],
+    'mode': 'relative',
+    'min': 0,
+    'max': 100,
+    'step': 0,
+    'value': 0,
+    }
+)
+releaseSlider.on("change", function(val){
+    synth.envelope.release = val
+})
 
 Nexus.context = Tone.getContext().rawContext._nativeAudioContext
 var oscilloscope = new Nexus.Oscilloscope(
@@ -176,10 +213,20 @@ var volumeSlider = new Nexus.Slider(
 
 volumeSlider.on('change',function(value) {
     synth.volume.value = value
-}) 
+})
 
-//dark mode/nexus styles function
+
+
+
+
+//dark mode/nexus styles functions
 var dmButton = document.querySelector('input[name=theme]');
+
+var nexusObjects = [
+    oscilloscope, filterDial, filterValue, meter, volumeSlider, octaveButtons,
+    attackSlider, decaySlider, sustainSlider, releaseSlider
+]
+
 dmButton.addEventListener("change", function(){
 
     var transit = () => {
@@ -192,30 +239,26 @@ dmButton.addEventListener("change", function(){
     var styleDark = () => {
         var darkBg = "#121212"
         var darkAc = "#03DAC5"
-        oscilloscope.colorize("fill", darkBg)
-        oscilloscope.colorize("accent", darkAc)
-        filterDial.colorize("fill", darkBg)
-        filterDial.colorize("accent", darkAc)
-        filterValue.colorize("fill", darkBg)
-        filterValue.colorize("accent", darkAc)
-        meter.colorize("fill", darkBg)
-        meter.colorize("accent", darkAc)
-        volumeSlider.colorize("fill", darkBg)
-        volumeSlider.colorize("accent", darkAc)
-        octaveButtons.colorize("fill", darkBg)
-        octaveButtons.colorize("accent", darkAc) 
+        for (var i = 0; i < nexusObjects.length; i++){
+            nexusObjects[i].colorize("fill", darkBg)
+            nexusObjects[i].colorize("accent", darkAc)
+
+            if (i === 5 || i > 7){
+                nexusObjects[i].colorize("fill", pannel)
+            }
+        }
     };
     
-
-
     if (this.checked){
         transit();
         document.documentElement.setAttribute("data-theme", "dark");
         styleDark();
+        pannel = "#333333"
     } else{
         transit();
         document.documentElement.setAttribute("data-theme", "light");
         nexusStyle();
+        pannel = "rgb(158, 158, 158)"
     }
 })
 
@@ -223,16 +266,12 @@ window.onload = nexusStyle();
 function nexusStyle(){
     var lightBg = "rgb(229, 229, 229)"
     var lightAc = "#18c947"
-    oscilloscope.colorize("fill", lightBg)
-    oscilloscope.colorize("accent", lightAc)
-    filterDial.colorize("fill", lightBg)
-    filterDial.colorize("accent", lightAc)
-    filterValue.colorize("fill", lightBg)
-    filterValue.colorize("accent", lightAc)
-    meter.colorize("fill", lightBg)
-    meter.colorize("accent", lightAc)
-    volumeSlider.colorize("fill", lightBg)
-    volumeSlider.colorize("accent", lightAc)
-    octaveButtons.colorize("fill", lightBg)
-    octaveButtons.colorize("accent", lightAc)
+    for (var i = 0; i < nexusObjects.length; i++){
+        nexusObjects[i].colorize("fill", lightBg)
+        nexusObjects[i].colorize("accent", lightAc)
+
+        if (i === 4 || i > 5){
+            nexusObjects[i].colorize("fill", pannel)
+        }
+    }
 };
