@@ -37,10 +37,34 @@ body{
     height:100%;
 }
 
+.patch-header{
+    font-weight: 400;
+    text-align: center;
+    margin: 0%;
+    font-size: 28.8px;
+    color: var(--text)
+}
+
+.dark-mode-container{
+    border: 2px solid var(--pannel);
+    display: flex;
+    justify-content: center;
+    width: max-content;
+}
+
+.dark-mode-header{
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--text)
+}
+
 input[type=checkbox]{
 	height: 0;
 	width: 0;
-	visibility: hidden;
+}
+
+#switch{
+    visibility: hidden;
 }
 
 label {
@@ -51,7 +75,8 @@ label {
 	background: grey;
 	float: right;
 	border-radius: 100px;
-	position: relative;
+    position: relative;
+    margin-top: 50%;
 }
 
 label:after {
@@ -225,13 +250,6 @@ label:active:after {
     display: flex;
     flex-direction: column;
     align-content: center;
-}
-.patch-header{
-    font-weight: 400;
-    text-align: center;
-    margin: 0%;
-    font-size: 28.8px;
-    color: var(--text)
 }
 
 .envelope-controls{

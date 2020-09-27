@@ -71,7 +71,7 @@ document.getElementById("keyboard").innerHTML = html;
 var pannel = "rgb(158, 158, 158)"
 function noteDown(elem, isSharp){
     var note = elem.dataset.note + ((Number(elem.dataset.octave) + OCTset));
-    elem.style.background = isSharp ? "rgb(78, 78, 78)" : "rgb(158, 158, 158";
+    elem.style.background = isSharp ? "rgb(78, 78, 78)" : pannel;
     synth.triggerAttackRelease(note);
     event.stopPropagation();
 }
@@ -220,8 +220,8 @@ volumeSlider.on('change',function(value) {
 
 
 //dark mode/nexus styles functions
-var dmButton = document.querySelector('input[name=theme]');
-
+var dmButton = document.querySelector("input[name=theme]");
+var dmHeader = document.querySelector(".dark-mode-header")
 var nexusObjects = [
     oscilloscope, filterDial, filterValue, meter, volumeSlider, octaveButtons,
     attackSlider, decaySlider, sustainSlider, releaseSlider
@@ -239,11 +239,12 @@ dmButton.addEventListener("change", function(){
     var styleDark = () => {
         var darkBg = "#121212"
         var darkAc = "#03DAC5"
+        pannel = "#333333"
         for (var i = 0; i < nexusObjects.length; i++){
             nexusObjects[i].colorize("fill", darkBg)
             nexusObjects[i].colorize("accent", darkAc)
 
-            if (i === 5 || i > 7){
+            if (i === 4 || i > 5){
                 nexusObjects[i].colorize("fill", pannel)
             }
         }
@@ -253,12 +254,12 @@ dmButton.addEventListener("change", function(){
         transit();
         document.documentElement.setAttribute("data-theme", "dark");
         styleDark();
-        pannel = "#333333"
+        dmHeader.textContent = "Turn up the lights 💡"
     } else{
         transit();
         document.documentElement.setAttribute("data-theme", "light");
         nexusStyle();
-        pannel = "rgb(158, 158, 158)"
+        dmHeader.textContent = "Turn off the lights 💡"
     }
 })
 
@@ -266,6 +267,7 @@ window.onload = nexusStyle();
 function nexusStyle(){
     var lightBg = "rgb(229, 229, 229)"
     var lightAc = "#18c947"
+    pannel = "rgb(158, 158, 158)"
     for (var i = 0; i < nexusObjects.length; i++){
         nexusObjects[i].colorize("fill", lightBg)
         nexusObjects[i].colorize("accent", lightAc)
