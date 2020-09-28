@@ -11,16 +11,35 @@
 </head>
 
 <body>
-    <div class="dark-mode-container">
-        <h6 class="dark-mode-header">Turn off the lights 💡</h6>
-        <div class="dark-mode-toggle">
-            <input type="checkbox" id="switch" name="theme"/><label for="switch"></label>
+    <div class="menu-container">
+        <div class="hamburger">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+            <div class="line line-3"></div>
         </div>
+        <nav class="menu">
+            <ul class="menu-list">
+                <li>
+                    <div class="dark-mode-container">
+                        <h1 class="dark-mode-header">TURN OFF THE LIGHTS💡</h1>
+                        <div class="dark-mode-toggle">
+                            <input type="checkbox" id="switch" name="theme"/>
+                            <label class="toggle" for="switch"></label>
+                        </div>
+                    </div>
+                </li>
+                <li class="menu-item"><a class="save">SAVE PATCH</a></li>
+                <li class="menu-item">
+                    <label for="loaded-patch" class="load">LOAD PATCH</label>
+                    <input type="file" id="loaded-patch" style="visibility: hidden;">
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <div class="controls">
         <div class="osc-container">
-            <h3 class="patch-header">OSC</h3>
+            <h1 class="patch-header">OSC</h1>
             <div class="osctypes">
                 <li> <button class="oscbuttons" id="1" data-active="false" name="sine">sine</button></li>
                 <li> <button class="oscbuttons" id="2" data-active="false" name="saw">saw</button></li>
@@ -29,7 +48,7 @@
             </div>
         </div>
         <div class="envelope-container">
-            <h2 class="patch-header">ENVELOPE</h2>
+            <h1 class="patch-header">ENVELOPE</h1>
             <div class="envelope-controls-container-container" id="envelope-sliders">
                 <div class="envelope-controls-container">
                     <li class="envelope-controls">A</li>
@@ -50,7 +69,7 @@
             </div>
         </div>
         <div class="filter-container-container">
-            <h6 class="patch-header">FILTER</h6>
+            <h1 class="patch-header">FILTER</h1>
             <div class="filter-container">
                 <div class="filter"></div>
                 <div class="filter-value"></div>
@@ -58,7 +77,7 @@
         </div>
 
         <div class="output-container">
-            <h5 class="patch-header">OUTPUT</h5>
+            <h1 class="patch-header">OUTPUT</h1>
             <div class="visz">
                 <div class="oscilloscope"></div>
                 <div class="meter"></div>
@@ -70,7 +89,7 @@
     
     <div class="keyboard-controls">
         <div class="octave-controls-container">
-            <h4 class="patch-header">OCTAVE</h4>
+            <h1 class="patch-header">OCTAVE</h1>
             <div class="octave-controls">
             </div>
         </div>

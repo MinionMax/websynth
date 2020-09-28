@@ -1,35 +1,35 @@
 //Master Synth Engine
-var notes = ["C", "D", "E", "F", "G", "A", "B"]//available note
+var notes = ["C", "D", "E", "F", "G", "A", "B"];//available note
 const synth = new Tone.Synth();//creates new synth instrument
-var html = ""
-var OCTset = 4
+var html = "";
+var OCTset = 4;
 
 var octaveButtons = new Nexus.RadioButton(
     document.querySelector(".octave-controls"),{
     'size': [120,25],
     'numberOfButtons': 5,
     'active': 2
-})
+});
 
 octaveButtons.on('change',function(n) {
-    OCTset = n + 2
+    OCTset = n + 2;
     if(n === -1){
         n = 2
-        octaveButtons.select(2)
-        console.log("octave can't be undefined")
+        octaveButtons.select(2);
+        console.log("octave can't be undefined");
     }
     if (n < 2){
-        octaveButtons.colorize("accent", "#ff0000" )
+        octaveButtons.colorize("accent", "#ff0000" );
     }
     if (n === 2 || n === undefined){
-        octaveButtons.colorize("accent", "#18c947" )
+        octaveButtons.colorize("accent", "#18c947" );
     }
     if (n > 2){
-        octaveButtons.colorize("accent", "#f6ff00" )
+        octaveButtons.colorize("accent", "#f6ff00" );
     }
 })
-octaveButtons.colorize("accent", "#18c947" )
-octaveButtons.colorize("fill", "rgb(229, 229, 229)" )
+octaveButtons.colorize("accent", "#18c947" );
+octaveButtons.colorize("fill", "rgb(229, 229, 229)" );
 
 
 
@@ -63,12 +63,13 @@ for (var octave = 0; octave < 2; octave++)
             data-octave="${octave}"></div>`;
         }
         
-        html += `</div>`
+        html += `</div>`;
     }
 }
 
+//functions to color keys and to trigger given note on press
 document.getElementById("keyboard").innerHTML = html;
-var pannel = "rgb(158, 158, 158)"
+var pannel = "rgb(158, 158, 158)";
 function noteDown(elem, isSharp){
     var note = elem.dataset.note + ((Number(elem.dataset.octave) + OCTset));
     elem.style.background = isSharp ? "rgb(78, 78, 78)" : pannel;
@@ -77,10 +78,11 @@ function noteDown(elem, isSharp){
 }
 
 function noteUp(elem, isSharp){
-    elem.style.background = isSharp ? pannel : "none"
+    elem.style.background = isSharp ? pannel : "none";
     synth.triggerRelease();
 }
 
+//toggleable buttons to set oscillator types
 var OSCbuttons = document.getElementsByClassName("oscbuttons")
 for(let div of OSCbuttons) {
     div.onclick = (activeOSC) => {
@@ -110,6 +112,7 @@ for(let div of OSCbuttons) {
     }
 }
 
+//create envelope sliders and pass their value to tone.js
 var attackSlider = new Nexus.Slider(
     document.querySelector(".a"),{
     'size': [10, 70],
@@ -166,6 +169,7 @@ releaseSlider.on("change", function(val){
     synth.envelope.release = val
 })
 
+//connect tone's audio context with Nexus' and create all "Output" Elements
 Nexus.context = Tone.getContext().rawContext._nativeAudioContext
 var oscilloscope = new Nexus.Oscilloscope(
     document.querySelector('.oscilloscope'),
@@ -178,28 +182,27 @@ const filter = new Tone.Filter({frequency: 10000, type: "lowpass"}).toDestinatio
 var filterDial = new Nexus.Dial(
     document.querySelector(".filter"),{
     'size': [75,75],
-    'interaction': 'radial', // "radial", "vertical", or "horizontal"
-    'mode': 'relative', // "absolute" or "relative"
+    'interaction': 'radial',
+    'mode': 'relative',
     'min': 0,
     'max': 10000,
     'step': 0,
     'value': 10000
-})
+});
 
 filterDial.on("change", function(){
-    filter.frequency.value = filterDial.value
-})
-synth.connect(filter)
+    filter.frequency.value = filterDial.value;
+});
+synth.connect(filter);
 
-var filterValue = new Nexus.Number(document.querySelector(".filter-value"))
-filterValue.link(filterDial)
+var filterValue = new Nexus.Number(document.querySelector(".filter-value"));
+filterValue.link(filterDial);
 
 var meter = new Nexus.Meter(
     document.querySelector(".meter"),{
     size: [25,70]
-})
-meter.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
-
+});
+meter.connect(Tone.Destination._internalChannels[1]._nativeAudioNode);
 
 var volumeSlider = new Nexus.Slider(
     document.querySelector(".vol2"),{
@@ -209,23 +212,91 @@ var volumeSlider = new Nexus.Slider(
     'max': 4,
     'step': 0,
     'value': 0,
-})
+});
 
 volumeSlider.on('change',function(value) {
     synth.volume.value = value
+});
+
+
+//function to make hamburger menu appear/disappear
+var hamburger = document.querySelector(".hamburger");
+var menu = document.querySelector(".menu");
+var controls = document.querySelector(".controls");
+var keyboardControls = document.querySelector(".keyboard-controls");
+hamburger.addEventListener("click", function(){
+    menu.classList.toggle("appear");
+    hamburger.classList.toggle("change");
+    controls.classList.toggle("blur");
+    keyboardControls.classList.toggle("blur");
 })
 
 
+//function to save current patch
+var saveBtn = document.querySelector(".save");
+saveBtn.addEventListener("click", patchToJson);
+function patchToJson(){
+    
+    var patch = {
+        oscillator_type: synth.oscillator.type,
+        envelope_attack: synth.envelope.attack,
+        envelope_decay: synth.envelope.decay,
+        envelope_sustain: synth.envelope.sustain,
+        envelope_release: synth.envelope.release,
+        filter_value: filterDial.value
+    };
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(patch));
+    saveBtn.setAttribute("href", dataStr);
+    saveBtn.setAttribute("download", "patch.json")
+}
 
+//function to load saved patch.json
+var fileInput = document.querySelector("#loaded-patch")
+fileInput.addEventListener("change", loadPatch)
+function loadPatch(){
+    var fr = new FileReader();
+    fr.readAsText(this.files[0]);
 
+    fr.onload = function(){
+        var loadedPatch = JSON.parse(fr.result);
+        synth.oscillator.type = loadedPatch.oscillator_type;
+        synth.envelope.attack = loadedPatch.envelope_attack;
+        synth.envelope.decay = loadedPatch.envelope_decay;
+        synth.envelope.sustain = loadedPatch.envelope_sustain;
+        synth.envelope.release = loadedPatch.envelope_release;
+        filterDial.value = loadedPatch.filter_value;
+        selectOSC(loadedPatch.oscillator_type);
+        setEnvSliders(loadedPatch.envelope_attack, loadedPatch.envelope_decay,
+            loadedPatch.envelope_sustain, loadedPatch.envelope_release);
+    }
+}
+
+function selectOSC(type){
+    var sine = document.getElementById("1");
+    var saw = document.getElementById("2");
+    var triangle = document.getElementById("3");
+    var square = document.getElementById("4");
+
+    sine.dataset.active = type === "sine";
+    saw.dataset.active = type === "saw";
+    triangle.dataset.active = type === "triangle";
+    square.dataset.active =type === "square";
+}
+
+function setEnvSliders(attack, decay, sustain, release){
+    attackSlider.value = attack;
+    decaySlider.value = decay;
+    sustainSlider.value = sustain;
+    releaseSlider.value = release;
+}
 
 //dark mode/nexus styles functions
 var dmButton = document.querySelector("input[name=theme]");
-var dmHeader = document.querySelector(".dark-mode-header")
+var dmHeader = document.querySelector(".dark-mode-header");
 var nexusObjects = [
     oscilloscope, filterDial, filterValue, meter, volumeSlider, octaveButtons,
     attackSlider, decaySlider, sustainSlider, releaseSlider
-]
+];
 
 dmButton.addEventListener("change", function(){
 
@@ -234,18 +305,18 @@ dmButton.addEventListener("change", function(){
         window.setTimeout(() => {
             document.documentElement.classList.remove("transition");
         }, 1000)
-    }
+    };
 
     var styleDark = () => {
-        var darkBg = "#121212"
-        var darkAc = "#03DAC5"
-        pannel = "#333333"
+        var darkBg = "#121212";
+        var darkAc = "#03DAC5";
+        pannel = "#333333";
         for (var i = 0; i < nexusObjects.length; i++){
-            nexusObjects[i].colorize("fill", darkBg)
-            nexusObjects[i].colorize("accent", darkAc)
+            nexusObjects[i].colorize("fill", darkBg);
+            nexusObjects[i].colorize("accent", darkAc);
 
             if (i === 4 || i > 5){
-                nexusObjects[i].colorize("fill", pannel)
+                nexusObjects[i].colorize("fill", pannel);
             }
         }
     };
@@ -254,26 +325,26 @@ dmButton.addEventListener("change", function(){
         transit();
         document.documentElement.setAttribute("data-theme", "dark");
         styleDark();
-        dmHeader.textContent = "Turn up the lights 💡"
+        dmHeader.textContent = "TURN UP THE LIGHTS💡";
     } else{
         transit();
         document.documentElement.setAttribute("data-theme", "light");
         nexusStyle();
-        dmHeader.textContent = "Turn off the lights 💡"
-    }
-})
+        dmHeader.textContent = "TURN OFF THE LIGHTS💡";
+    };
+});
 
 window.onload = nexusStyle();
 function nexusStyle(){
-    var lightBg = "rgb(229, 229, 229)"
-    var lightAc = "#18c947"
-    pannel = "rgb(158, 158, 158)"
+    var lightBg = "rgb(229, 229, 229)";
+    var lightAc = "#18c947";
+    pannel = "rgb(158, 158, 158)";
     for (var i = 0; i < nexusObjects.length; i++){
-        nexusObjects[i].colorize("fill", lightBg)
-        nexusObjects[i].colorize("accent", lightAc)
+        nexusObjects[i].colorize("fill", lightBg);
+        nexusObjects[i].colorize("accent", lightAc);
 
         if (i === 4 || i > 5){
-            nexusObjects[i].colorize("fill", pannel)
+            nexusObjects[i].colorize("fill", pannel);
         }
     }
 };
