@@ -1,1 +1,1 @@
-# js-websynth
+# websynth
