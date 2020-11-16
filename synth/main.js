@@ -75,6 +75,7 @@ function noteDown(elem, isSharp){
     elem.style.background = isSharp ? "rgb(78, 78, 78)" : pannel;
     synth.triggerAttackRelease(note);
     event.stopPropagation();
+    console.log(lfo.amplitude.value)
 }
 
 function noteUp(elem, isSharp){
@@ -96,13 +97,13 @@ for(let div of OSCbuttons) {
                         synth.oscillator.type = "sine";
                     break;
                     case "saw":
-                        synth.oscillator.type ="sawtooth";
+                        synth.oscillator.type = "sawtooth";
                     break;
                     case "triangle":
-                        synth.oscillator.type ="triangle";
+                        synth.oscillator.type = "triangle";
                     break;
                     case "square":
-                        synth.oscillator.type ="square";
+                        synth.oscillator.type = "square";
                     break;
                 }
                 console.log("OSC has been set to:", activeOSC.target.name);
@@ -177,27 +178,6 @@ var oscilloscope = new Nexus.Oscilloscope(
 }) 
 oscilloscope.connect(Tone.Destination._internalChannels[1]._nativeAudioNode)
 
-const filter = new Tone.Filter({frequency: 10000, type: "lowpass"}).toDestination();
-
-var filterDial = new Nexus.Dial(
-    document.querySelector(".filter"),{
-    'size': [75,75],
-    'interaction': 'radial',
-    'mode': 'relative',
-    'min': 0,
-    'max': 10000,
-    'step': 0,
-    'value': 10000
-});
-
-filterDial.on("change", function(){
-    filter.frequency.value = filterDial.value;
-});
-synth.connect(filter);
-
-var filterValue = new Nexus.Number(document.querySelector(".filter-value"));
-filterValue.link(filterDial);
-
 var meter = new Nexus.Meter(
     document.querySelector(".meter"),{
     size: [25,70]
@@ -217,6 +197,58 @@ var volumeSlider = new Nexus.Slider(
 volumeSlider.on('change',function(value) {
     synth.volume.value = value
 });
+
+var speedDial = new Nexus.Dial(
+    document.querySelector(".speed"),{
+        'size': [75,75],
+        'interaction': 'radial',
+        'mode': 'relative',
+        'min': 0,
+        'max': 10000,
+        'step': 0,
+        'value': 10000
+    }
+)
+
+var intDial = new Nexus.Dial(
+    document.querySelector(".intensity"),{
+        'size': [75,75],
+        'interaction': 'radial',
+        'mode': 'relative',
+        'min': 0,
+        'max': 10000,
+        'step': 0,
+        'value': 10000
+    }
+)
+
+
+
+//effect elements
+const lfo = new Tone.LFO(1000, 0, 10000)
+const filter = new Tone.Filter({frequency: 10000, type: "lowpass"}).toDestination();
+lfo.connect(filter.frequency)
+synth.connect(filter)
+
+
+var filterDial = new Nexus.Dial(
+    document.querySelector(".filter"),{
+    'size': [75,75],
+    'interaction': 'radial',
+    'mode': 'relative',
+    'min': 0,
+    'max': 10000,
+    'step': 0,
+    'value': 10000
+});
+
+filterDial.on("change", function(){
+    filter.frequency.value = filterDial.value;
+});
+
+
+var filterValue = new Nexus.Number(document.querySelector(".filter-value"));
+filterValue.link(filterDial);
 
 
 //function to make hamburger menu appear/disappear
@@ -272,7 +304,7 @@ function loadPatch(){
 }
 
 function selectOSC(type){
-    var sine = document.getElementById("1");
+    var sine = dcument.getElementById("1");
     var saw = document.getElementById("2");
     var triangle = document.getElementById("3");
     var square = document.getElementById("4");
@@ -280,7 +312,7 @@ function selectOSC(type){
     sine.dataset.active = type === "sine";
     saw.dataset.active = type === "saw";
     triangle.dataset.active = type === "triangle";
-    square.dataset.active =type === "square";
+    square.dataset.active = type === "square";
 }
 
 function setEnvSliders(attack, decay, sustain, release){
@@ -295,46 +327,59 @@ var dmButton = document.querySelector("input[name=theme]");
 var dmHeader = document.querySelector(".dark-mode-header");
 var nexusObjects = [
     oscilloscope, filterDial, filterValue, meter, volumeSlider, octaveButtons,
-    attackSlider, decaySlider, sustainSlider, releaseSlider
+    speedDial, intDial, attackSlider, decaySlider, sustainSlider, releaseSlider
 ];
 
-dmButton.addEventListener("change", function(){
+function transit(){
+    document.documentElement.classList.add("transition");
+    window.setTimeout(() => {
+        document.documentElement.classList.remove("transition");
+    }, 1000)
+};
 
-    var transit = () => {
-        document.documentElement.classList.add("transition");
-        window.setTimeout(() => {
-            document.documentElement.classList.remove("transition");
-        }, 1000)
-    };
+function styleDark(){
+    var darkBg = "#121212";
+    var darkAc = "#03DAC5";
+    pannel = "#333333";
+    for (var i = 0; i < nexusObjects.length; i++){
+        nexusObjects[i].colorize("fill", darkBg);
+        nexusObjects[i].colorize("accent", darkAc);
 
-    var styleDark = () => {
-        var darkBg = "#121212";
-        var darkAc = "#03DAC5";
-        pannel = "#333333";
-        for (var i = 0; i < nexusObjects.length; i++){
-            nexusObjects[i].colorize("fill", darkBg);
-            nexusObjects[i].colorize("accent", darkAc);
-
-            if (i === 4 || i > 5){
-                nexusObjects[i].colorize("fill", pannel);
-            }
+        if (i === 4 || i > 7){
+            nexusObjects[i].colorize("fill", pannel);
         }
-    };
-    
+    }
+};
+
+dmButton.addEventListener("change", function(){
     if (this.checked){
         transit();
         document.documentElement.setAttribute("data-theme", "dark");
         styleDark();
         dmHeader.textContent = "TURN UP THE LIGHTS💡";
+        localStorage.setItem("dark", JSON.stringify(true))
     } else{
         transit();
         document.documentElement.setAttribute("data-theme", "light");
         nexusStyle();
         dmHeader.textContent = "TURN OFF THE LIGHTS💡";
+        localStorage.setItem("dark", JSON.stringify(false))
     };
 });
 
-window.onload = nexusStyle();
+window.onload = getEnv();
+// load dark-mode settings from previous session
+function getEnv(){
+    dmSetting = JSON.parse(localStorage.getItem("dark"));
+    if (dmSetting == true){
+        document.documentElement.setAttribute("data-theme", "dark");
+        dmHeader.textContent = "TURN UP THE LIGHTS💡";
+        styleDark();
+    }else{
+        nexusStyle();
+    }
+}
+
 function nexusStyle(){
     var lightBg = "rgb(229, 229, 229)";
     var lightAc = "#18c947";
@@ -343,8 +388,9 @@ function nexusStyle(){
         nexusObjects[i].colorize("fill", lightBg);
         nexusObjects[i].colorize("accent", lightAc);
 
-        if (i === 4 || i > 5){
+        if (i === 4 || i > 7){
             nexusObjects[i].colorize("fill", pannel);
         }
     }
 };
+

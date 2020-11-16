@@ -3,10 +3,11 @@
 <link rel="stylesheet" href="./styles.css">
 
 <head>
-    <title>web synth</title>
+    <title>websynth</title>
     <link rel="icon" href="images/sine-white.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.45/Tone.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/nexusui@latest/dist/NexusUI.js"></script>
+    <script src="https://kit.fontawesome.com/f42efcdf68.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale">
 </head>
 
@@ -16,6 +17,10 @@
             <div class="line line-1"></div>
             <div class="line line-2"></div>
             <div class="line line-3"></div>
+        </div>
+        <div class="menu-header">
+            <img src="./images/sine-white.png" id="sine-head">
+            <h1 class="websynth-header">websynth</h1>
         </div>
         <nav class="menu">
             <ul class="menu-list">
@@ -31,10 +36,15 @@
                 <li class="menu-item"><a class="save">SAVE PATCH</a></li>
                 <li class="menu-item">
                     <label for="loaded-patch" class="load">LOAD PATCH</label>
-                    <input type="file" id="loaded-patch" style="visibility: hidden;">
+                    <input type="file" id="loaded-patch" accept=".json" style="visibility: hidden;">
                 </li>
             </ul>
         </nav>
+        <div class="sharepoint-container">
+            <h1 class="websynth-header">sharepoint</h1>
+            <i class="fas fa-external-link-square-alt"></i>
+        </div>
+        
     </div>
 
     <div class="controls">
@@ -75,7 +85,20 @@
                 <div class="filter-value"></div>
             </div>
         </div>
-
+        <div class="lfo-container-container">
+            <h1 class="patch-header">LFO</h1>
+            <div class="lfo-container">
+                <div class="lfo speed">SPEED</div>
+                <div class="lfo intensity">INT</div>
+                <div class="lfo destination">DEST
+                    <ul class="dest-list">
+                        <li class="dest-items">pitch</li>
+                        <li class="dest-items">cutoff</li>
+                        <li class="dest-items">volume</li>
+                    </ul>
+                </div>
+            </div>    
+        </div>
         <div class="output-container">
             <h1 class="patch-header">OUTPUT</h1>
             <div class="visz">
@@ -83,10 +106,9 @@
                 <div class="meter"></div>
                 <div class="vol2"></div>
             </div>
-
         </div>
     </div>
-    
+
     <div class="keyboard-controls">
         <div class="octave-controls-container">
             <h1 class="patch-header">OCTAVE</h1>
@@ -96,6 +118,7 @@
         <div id="keyboard">
         </div>    
     </div>
+
     <script src="main.js"></script>
 </body>
 </html>

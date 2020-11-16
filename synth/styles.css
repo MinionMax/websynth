@@ -11,6 +11,7 @@ html{
     --pannel: rgb(158, 158, 158);
     --text: black;
     --altText: white;
+    --invert: invert(100);
 }
 
 html[data-theme="dark"]{
@@ -19,6 +20,7 @@ html[data-theme="dark"]{
     --pannel: #333333;
     --text: #FFFFFF;
     --altText: #121212;
+    --invert: invert(0);
 }
 
 html.transition,
@@ -36,7 +38,7 @@ body{
     margin-left: 15%;
     margin-top: 10%;
     height:100%;
-    overflow-y: hidden;
+    overflow-x: visible;
 }
 
 a{
@@ -52,21 +54,62 @@ a{
 }
 
 .menu-container{
-    position: absolute;
-    left: -43px;
+    top: 0;
+    display: flex;
+    height: 60px;
+    justify-content: flex-start;
+    position: fixed;
+    z-index: 10000;
+    width: 70%;
+}
+
+.menu-header{
+    display: flex;
+    justify-content: flex-start;
+    height: 55px;
+    width: auto;
+    margin-right: auto;
+    align-self: center;
+}
+
+#sine-head{
+    max-width: 50%;
+    max-height: 100%;
+    vertical-align: middle;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    filter: var(--invert);
+}
+
+.websynth-header{
+    font-weight: normal;
+    font-size: larger;
+    color: var(--text);
+}
+
+.sharepoint-container{
+    display: flex;
+    align-items: center;
+}
+
+.fa-external-link-square-alt{
+    padding-left: 3px;
+    color: var(--text);
 }
 
 .hamburger{
     width: 30px;
     height: 30px;
-    position: absolute;
     margin-left: 3px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     z-index: 5;
-    top: -2px;
+    align-self: center;
 }
 
 .line{
@@ -83,7 +126,6 @@ a{
     transition: 250ms;
     transition-property: opacity;
     z-index: -1;
-
 }
 
 .appear{
@@ -94,10 +136,9 @@ a{
 .menu-list{
     width: 320px;
     height: 100%;
-    background-color: var(--pannel);
     list-style: none;
     position: absolute;
-    top: 50px;
+    top: 100px;
     z-index: 4;
     display: flex;
     justify-content: center;
@@ -136,7 +177,6 @@ a{
 }
 
 .dark-mode-container{
-    flex-direction: row;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -153,6 +193,7 @@ a{
 .dark-mode-toggle{
     padding-top: 16.6px ;
 }
+
 input[type=checkbox]{
 	height: 0;
 	width: 0;
@@ -200,10 +241,9 @@ input:checked + label:after {
 
 .controls{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    height: 60%;
+    height: 180px;
     margin: auto;
     flex-wrap: wrap;
     margin-top: 60px;
@@ -211,7 +251,6 @@ input:checked + label:after {
 
 .keyboard-controls{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap
 }
@@ -274,8 +313,7 @@ input:checked + label:after {
 }
 
 .visz{
-    display: flex;
-    flex-direction: row;
+    display: flex;  
     justify-content: space-between;
 }
 
@@ -292,9 +330,11 @@ input:checked + label:after {
     border: 2px solid var(--pannel);
     list-style: none;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     padding: 10px;
     width: 150px;
+    height: 100%;
 }
 
 .osctypes{
@@ -330,14 +370,15 @@ input:checked + label:after {
     padding: 10px;
     font-weight: 400;
     width: 300px;
-    height: 160px;
+    height: 100%;
     overflow: hidden;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .envelope-controls-container-container{
     display: flex;
-    flex-direction: row;
     justify-content: space-evenly;
 }
 
@@ -356,12 +397,45 @@ input:checked + label:after {
 .filter-container-container{
     border: 2px solid var(--pannel);
     padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .filter-container{
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.lfo-container-container{
+    border: 2px solid var(--pannel);
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.lfo-container{
+    display: flex;
+    justify-content: center;
+}
+
+.lfo{
+    text-align: center;
+    padding: 2px;
+    color: var(--text)
+}
+
+.dest-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    font-size: 90%;
 }
 
 @media screen and (max-width: 1024px) {
