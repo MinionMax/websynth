@@ -378,7 +378,7 @@ function getEnv(){
     }else{
         nexusStyle();
     }
-}
+};
 
 function nexusStyle(){
     var lightBg = "rgb(229, 229, 229)";

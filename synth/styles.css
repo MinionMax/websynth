@@ -88,6 +88,7 @@ a{
     font-weight: normal;
     font-size: larger;
     color: var(--text);
+    cursor: pointer;
 }
 
 .sharepoint-container{
